@@ -19,13 +19,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main) as ActivityMainBinding
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
 
         setSupportActionBar(binding.toolbar)
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
-
-        binding.bottomNavigation.setupWithNavController(navController)
-
+        binding.bottomMenu.setupWithNavController(navController)
         NavigationUI.setupActionBarWithNavController(this,navController)
 
     }

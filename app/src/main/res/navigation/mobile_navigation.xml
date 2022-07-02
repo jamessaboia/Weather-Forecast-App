@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mobile_navigation.xml">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation.xml"
+    app:startDestination="@id/currentWeatherFragment">
 
+    <fragment
+        android:id="@+id/currentWeatherFragment"
+        android:name="com.jamessaboia.weatherforecast.ui.weather.current.CurrentWeatherFragment"
+        android:label="current_weather_fragment"
+        tools:layout="@layout/current_weather_fragment" />
+    <fragment
+        android:id="@+id/nextWeatherListFragment"
+        android:name="com.jamessaboia.weatherforecast.ui.weather.next.list.NextWeatherListFragment"
+        android:label="next_weather_fragment"
+        tools:layout="@layout/next_weather_fragment" />
+    <fragment
+        android:id="@+id/nextWeatherDetailsFragment"
+        android:name="com.jamessaboia.weatherforecast.ui.weather.next.details.NextWeatherDetailsFragment"
+        android:label="next_weather_details_fragment"
+        tools:layout="@layout/next_weather_details_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.jamessaboia.weatherforecast.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
