@@ -1,4 +1,4 @@
-package com.jamessaboia.weatherforecast.data.response
+package com.jamessaboia.weatherforecast.data.db.entity
 
 
 import com.google.gson.annotations.SerializedName
