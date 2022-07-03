@@ -13,7 +13,8 @@ import com.jamessaboia.weatherforecast.data.db.entity.CurrentWeatherEntry
 
 @TypeConverters(value = [(Converters::class)])
 abstract class ForecastDatabase : RoomDatabase() {
-    abstract fun CurrentWeatherDao(): CurrentWeatherDao
+
+    abstract fun currentWeatherDao(): CurrentWeatherDao
 
     companion object {
         @Volatile
