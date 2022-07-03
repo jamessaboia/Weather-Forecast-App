@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.jamessaboia.weatherforecast.R
-import com.jamessaboia.weatherforecast.data.Api
+import com.jamessaboia.weatherforecast.data.network.Api
+import com.jamessaboia.weatherforecast.data.network.WeatherNetworkDataSourceImpl
+import com.jamessaboia.weatherforecast.data.network.response.ConnectivityInterceptorImpl
 import com.jamessaboia.weatherforecast.databinding.CurrentWeatherFragmentBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,11 +40,15 @@ class CurrentWeatherFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CurrentWeatherViewModel::class.java)
         // TODO: Use the ViewModel
-        val apiService = Api()
+        val apiService = Api(ConnectivityInterceptorImpl(this.requireContext()))
+        val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService)
+
+        weatherNetworkDataSource.downloadedCurrentWeather.observe(viewLifecycleOwner, Observer {
+            binding.textView.text = it.toString()
+        })
 
         GlobalScope.launch(Dispatchers.Main) {
-            val currentWeatherResponse = apiService.getCurrentWeather("New York").await()
-            binding.textView.text = currentWeatherResponse.toString()
+            weatherNetworkDataSource.fetchCurrentWeather("New York")
         }
     }
 
