@@ -1,13 +1,17 @@
 package com.jamessaboia.weatherforecast.data.db.unitlocalized
 
+import androidx.databinding.adapters.Converters
 import androidx.room.ColumnInfo
+import androidx.room.TypeConverters
 
 data class MetricCurrentWeatherEntry(
-    @ColumnInfo(name = "temp")
+    @ColumnInfo(name = "temperature")
     val temperature: Int,
     @ColumnInfo(name = "weatherDescriptions")
+    @TypeConverters(Converters::class)
     val weatherDescriptions: List<String>,
     @ColumnInfo(name = "weatherIcons")
+    @TypeConverters(Converters::class)
     val weatherIcons: List<String>,
     @ColumnInfo(name = "windSpeed")
     val windSpeed: Int,
