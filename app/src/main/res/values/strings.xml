@@ -3,4 +3,6 @@
     <string name="today">Today</string>
     <string name="next_days">Next Days</string>
     <string name="settings">Settings</string>
+    <string name="loading">Loading</string>
+<!--    <string name="today">Today</string>-->
 </resources>
