@@ -1,54 +1,37 @@
 package com.jamessaboia.weatherforecast.data.db.entity
 
 
-import androidx.databinding.adapters.Converters
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.jamessaboia.weatherforecast.data.db.Converters
 
 const val CURRENT_WEATHER_ID = 0
 
 @Entity(tableName = "current_weather")
 data class CurrentWeatherEntry(
 
-    val cloudcover: Int,
+    @SerializedName("feelslike_c")
+    val feelslike_c: Float,
 
-    val feelslike: Int,
+    @SerializedName("precip_mm")
+    val precip_mm: Float,
 
-    @SerializedName("is_day")
-    val isDay: String,
+    @SerializedName("temp_c")
+    val temp_c: Int,
 
-    @SerializedName("observation_time")
-    val observationTime: String,
+    @SerializedName("vis_km")
+    val vis_km: Int,
 
-    val precip: Float,
-
-    val pressure: Float,
-
-    val temperature: Int,
-
-    @SerializedName("uv_index")
-    val uvIndex: Int,
-
-    val visibility: Int,
-
-    @SerializedName("weather_code")
-    val weatherCode: Int,
-
-    @SerializedName("weather_descriptions")
+    @SerializedName("condition")
+    @Embedded
     @TypeConverters(Converters::class)
-    val weatherDescriptions: List<String>,
+    val condition: Condition,
 
-    @SerializedName("weather_icons")
-    @TypeConverters(Converters::class)
-    val weatherIcons: List<String>,
-
-    @SerializedName("wind_dir")
-    val windDir: String,
-
-    @SerializedName("wind_speed")
-    val windSpeed: Int
+    @SerializedName("wind_mph")
+    val wind_mph: Float
 
 ) {
 
@@ -56,3 +39,11 @@ data class CurrentWeatherEntry(
     var id: Int = CURRENT_WEATHER_ID
 
 }
+
+@Entity(tableName = "condition")
+data class Condition(
+    @SerializedName("text")
+    val text: String,
+    @SerializedName("icon")
+    val icon: String
+)

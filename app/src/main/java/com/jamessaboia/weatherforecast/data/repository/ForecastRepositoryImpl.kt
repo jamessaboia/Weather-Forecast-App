@@ -1,9 +1,7 @@
 package com.jamessaboia.weatherforecast.data.repository
 
-import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.LiveData
 import com.jamessaboia.weatherforecast.data.db.CurrentWeatherDao
-import com.jamessaboia.weatherforecast.data.db.entity.CurrentWeatherEntry
 import com.jamessaboia.weatherforecast.data.network.WeatherNetworkDataSource
 import com.jamessaboia.weatherforecast.data.network.response.CurrentWeatherResponse
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +20,7 @@ class ForecastRepositoryImpl(
             persistFetchedCurrentWeather(newCurrentWeather)
         }
     }
-    override suspend fun getCurrentWeather(): LiveData<CurrentWeatherEntry> {
+    override suspend fun getCurrentWeather(): LiveData<CurrentWeatherResponse> {
         initWeatherData()
         return withContext(Dispatchers.IO){
             return@withContext currentWeatherDao.getWeather()
@@ -31,7 +29,7 @@ class ForecastRepositoryImpl(
 
     private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherResponse){
         GlobalScope.launch(Dispatchers.IO) {
-            currentWeatherDao.upsert(fetchedWeather.currentWeatherEntry)
+            currentWeatherDao.upsert(fetchedWeather.current)
         }
     }
 
@@ -50,7 +48,7 @@ class ForecastRepositoryImpl(
 
     private suspend fun fetchCurrentWeather() {
         weatherNetworkDataSource.fetchCurrentWeather(
-            "Los Angels"
+            "Manaus"
         )
     }
 

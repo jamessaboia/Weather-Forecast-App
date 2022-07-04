@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/nextWeatherListFragment"
         android:name="com.jamessaboia.weatherforecast.ui.weather.next.list.NextWeatherListFragment"
-        android:label="next_weather_fragment"
+        android:label="Next Weather"
         tools:layout="@layout/next_weather_fragment" />
     <fragment
         android:id="@+id/nextWeatherDetailsFragment"

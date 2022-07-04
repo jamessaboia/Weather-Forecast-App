@@ -1,25 +1,18 @@
 package com.jamessaboia.weatherforecast.ui.weather.current
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.jamessaboia.weatherforecast.R
-import com.jamessaboia.weatherforecast.data.network.Api
-import com.jamessaboia.weatherforecast.data.network.WeatherNetworkDataSourceImpl
-import com.jamessaboia.weatherforecast.data.network.response.ConnectivityInterceptorImpl
 import com.jamessaboia.weatherforecast.databinding.CurrentWeatherFragmentBinding
 import com.jamessaboia.weatherforecast.internal.glide.GlideApp
 import com.jamessaboia.weatherforecast.ui.base.ScopedFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -35,7 +28,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding =
             DataBindingUtil.inflate(
@@ -45,34 +38,37 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         viewModel =
-            ViewModelProvider(this, viewModelFactory)
-                .get(CurrentWeatherViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory)[CurrentWeatherViewModel::class.java]
 
         bindUi()
+
     }
 
-    private fun bindUi() = launch{
+    private fun bindUi() = launch {
         val currentWeather = viewModel.weather.await()
 
         currentWeather.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
 
-            binding.groupLoading.visibility = View.GONE
-            updateLocation("New York")
-            updateDateToToday()
-            updateTemperatures(it.temperature, it.feelslike)
-            updateCondition(it.weatherDescriptions)
-            updatePrecipitation(it.precip)
-            updateWind(it.windDir, it.windSpeed)
-            updateVisibility(it.visibility)
+            it.current.apply {
+                binding.groupLoading.visibility = View.GONE
+                updateLocation("Manaus")
+                updateDateToToday()
+                updateTemperatures(temp_c, feelslike_c)
+                updateCondition(condition.text)
+                updatePrecipitation(precip_mm)
+                updateWind(wind_mph)
+                updateVisibility(vis_km)
 
-//            GlideApp.with(this@CurrentWeatherFragment)
-//                .load(it.weatherIcons[0])
-//                .into(binding.imageViewConditionIcon)
+                GlideApp.with(this@CurrentWeatherFragment)
+                    .load("https:${condition.icon}")
+                    .into(binding.imageViewConditionIcon)
+            }
         })
     }
 
@@ -89,24 +85,22 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.today)
     }
 
-    private fun updateTemperatures(temperature: Int, feelslike: Int) {
+    private fun updateTemperatures(temperature: Int, feelslike: Float) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("°C", "°F")
         binding.textViewTemperature.text = "$temperature$unitAbbreviation"
         binding.textViewFeelsLikeTemperature.text = "Feels like $feelslike$unitAbbreviation"
     }
 
-    private fun updateCondition(condition: List<String>) {
-        binding.textViewCondition.text = condition.toString()
+    private fun updateCondition(condition: String) {
+        binding.textViewCondition.text = condition
     }
 
     private fun updatePrecipitation(precipitation: Float) {
-        val unitAbbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
-        binding.textViewPrecipitation.text = "Precipitation: $precipitation $unitAbbreviation"
+        binding.textViewPrecipitation.text = "Precipitation: $precipitation"
     }
 
-    private fun updateWind(windDirection: String, windSpeed: Int) {
-        val unitAbbreviation = chooseLocalizedUnitAbbreviation("kph", "mph")
-        binding.textViewWind.text = "Wind: $windDirection, $windSpeed $unitAbbreviation"
+    private fun updateWind(windDirection: Float) {
+        binding.textViewWind.text = "Wind: $windDirection"
     }
 
     private fun updateVisibility(visibility: Int) {

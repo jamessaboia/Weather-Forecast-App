@@ -2,7 +2,6 @@ package com.jamessaboia.weatherforecast.data.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jamessaboia.weatherforecast.data.network.response.ConnectivityInterceptor
-import com.jamessaboia.weatherforecast.data.network.response.ConnectivityInterceptorImpl
 import com.jamessaboia.weatherforecast.data.network.response.CurrentWeatherResponse
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -13,18 +12,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-const val API_KEY = "2b615d7a74abd8c9325b072ab23b97d2"
-
-//http://api.weatherstack.com/current?access_key=2b615d7a74abd8c9325b072ab23b97d2&query=New%20York
-
-// BASE URL = http://api.weatherstack.com/
+const val API_KEY = "a7856b0446aa495499e55850220307"
 
 interface Api {
 
-    @GET("current")
+    @GET("current.json")
     fun getCurrentWeather(
-        @Query("query") location: String,
-//        @Query("lang") languageCode: String = "en"
+        @Query("q") location: String
     ): Deferred<CurrentWeatherResponse>
 
     companion object {
@@ -35,7 +29,7 @@ interface Api {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("access_key", API_KEY)
+                    .addQueryParameter("key", API_KEY)
                     .build()
                 val request = chain.request()
                     .newBuilder()
@@ -52,7 +46,7 @@ interface Api {
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://api.weatherstack.com/")
+                .baseUrl("http://api.weatherapi.com/v1/")
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

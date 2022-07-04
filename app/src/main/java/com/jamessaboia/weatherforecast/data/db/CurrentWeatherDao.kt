@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jamessaboia.weatherforecast.data.db.entity.CURRENT_WEATHER_ID
 import com.jamessaboia.weatherforecast.data.db.entity.CurrentWeatherEntry
-import com.jamessaboia.weatherforecast.data.db.unitlocalized.MetricCurrentWeatherEntry
+import com.jamessaboia.weatherforecast.data.network.response.CurrentWeatherResponse
 
 @Dao
 interface CurrentWeatherDao {
@@ -15,5 +15,5 @@ interface CurrentWeatherDao {
     fun upsert(weatherEntry: CurrentWeatherEntry)
 
     @Query("select * from current_weather where id = $CURRENT_WEATHER_ID")
-    fun getWeather(): LiveData<CurrentWeatherEntry>
+    fun getWeather(): LiveData<CurrentWeatherResponse>
 }

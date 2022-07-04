@@ -9,6 +9,8 @@ import com.jamessaboia.weatherforecast.data.network.WeatherNetworkDataSource
 import com.jamessaboia.weatherforecast.data.network.WeatherNetworkDataSourceImpl
 import com.jamessaboia.weatherforecast.data.network.response.ConnectivityInterceptor
 import com.jamessaboia.weatherforecast.data.network.response.ConnectivityInterceptorImpl
+import com.jamessaboia.weatherforecast.data.provider.UnitProvide
+import com.jamessaboia.weatherforecast.data.provider.UnitProvideImpl
 import com.jamessaboia.weatherforecast.data.repository.ForecastRepository
 import com.jamessaboia.weatherforecast.data.repository.ForecastRepositoryImpl
 import com.jamessaboia.weatherforecast.ui.weather.current.CurrentWeatherViewModelFactory
@@ -30,7 +32,8 @@ class ForecastApplication: Application(), KodeinAware {
         bind() from singleton { Api(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance()) }
-        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+        bind<UnitProvide>() with singleton { UnitProvideImpl(instance()) }
+        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
 
 
     }
@@ -38,6 +41,6 @@ class ForecastApplication: Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)
-//        PreferenceManager
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }
 }

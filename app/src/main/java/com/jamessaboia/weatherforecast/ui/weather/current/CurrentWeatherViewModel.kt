@@ -1,12 +1,14 @@
 package com.jamessaboia.weatherforecast.ui.weather.current
 
 import androidx.lifecycle.ViewModel
+import com.jamessaboia.weatherforecast.data.provider.UnitProvide
 import com.jamessaboia.weatherforecast.data.repository.ForecastRepository
 import com.jamessaboia.weatherforecast.internal.UnitSystem
 import com.jamessaboia.weatherforecast.internal.lazyDeferred
 
 class CurrentWeatherViewModel(
-    private val forecastRepository: ForecastRepository
+    private val forecastRepository: ForecastRepository,
+    unitProvide: UnitProvide
 ) : ViewModel() {
 
     private val unitSystem = UnitSystem.METRIC  // get from settings later
