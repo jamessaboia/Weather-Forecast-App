@@ -13,15 +13,19 @@ import com.jamessaboia.weatherforecast.data.network.Api
 import com.jamessaboia.weatherforecast.data.network.WeatherNetworkDataSourceImpl
 import com.jamessaboia.weatherforecast.data.network.response.ConnectivityInterceptorImpl
 import com.jamessaboia.weatherforecast.databinding.CurrentWeatherFragmentBinding
+import com.jamessaboia.weatherforecast.ui.base.ScopedFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 
-class CurrentWeatherFragment : Fragment() {
+class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
-    companion object {
-        fun newInstance() = CurrentWeatherFragment()
-    }
+    override val kodein by closestKodein()
+    private val viewModelFactory: CurrentWeatherViewModelFactory by instance()
 
     lateinit var binding: CurrentWeatherFragmentBinding
     private lateinit var viewModel: CurrentWeatherViewModel
@@ -32,24 +36,29 @@ class CurrentWeatherFragment : Fragment() {
     ): View? {
 
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.current_weather_fragment, container, false)
+            DataBindingUtil.inflate(
+                inflater, R.layout.current_weather_fragment,
+                container, false
+            )
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CurrentWeatherViewModel::class.java)
-        // TODO: Use the ViewModel
-        val apiService = Api(ConnectivityInterceptorImpl(this.requireContext()))
-        val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService)
 
-        weatherNetworkDataSource.downloadedCurrentWeather.observe(viewLifecycleOwner, Observer {
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)
+                .get(CurrentWeatherViewModel::class.java)
+
+        bindUi()
+    }
+
+    private fun bindUi() = launch{
+        val currentWeather = viewModel.weather.await()
+        currentWeather.observe(viewLifecycleOwner, Observer {
+            if (it == null) return@Observer
             binding.textView.text = it.toString()
         })
-
-        GlobalScope.launch(Dispatchers.Main) {
-            weatherNetworkDataSource.fetchCurrentWeather("New York")
-        }
     }
 
 }
