@@ -1,9 +1,8 @@
 package com.jamessaboia.weatherforecast.data.repository
 
-import androidx.lifecycle.LiveData
-import com.jamessaboia.weatherforecast.data.network.response.CurrentWeatherResponse
+import com.jamessaboia.weatherforecast.data.db.entity.History
 
 interface ForecastRepository {
-    suspend fun getCurrentWeather(): LiveData<CurrentWeatherResponse>
-//    suspend fun getWeatherLocation(): LiveData<WeatherLocation>
+    suspend fun addForecast(history: History)
+    suspend fun getForecast(): List<History>
 }

@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">Weather Forecast</string>
     <string name="today">Today</string>
+    <string name="today_city">Today - %1$s</string>
     <string name="next_days">Next Days</string>
     <string name="settings">Settings</string>
     <string name="loading">Loading</string>
     <string name="location_settings">Location Settings</string>
-    <string name="manually_search_location">Manually search the location</string>
-    <string name="allow_app_location">Allow the app to get your location</string>
+    <string name="search_location">Search location for weather forecast</string>
+    <string name="erro_consulta_api">Erro na consulta da API</string>
+    <string name="next_3_days">Next 3 Days</string>
+    <string name="city">City:</string>
+    <string name="date">Date/Hour:</string>
+    <string name="history">History</string>
     <!--    <string name="today">Today</string>-->
 </resources>

@@ -71,9 +71,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
     kapt "androidx.room:room-compiler:$room_version"
 
-//    implementation "com.google.code.gson:gson:2.8.6"
-
-
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 
@@ -87,18 +84,16 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
-
-    def kodein_version = '5.2.0'
-    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
-    implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
-
+    def koin_version = '2.1.5'
+    // Koin
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     implementation "com.jakewharton.threetenabp:threetenabp:1.1.0"
 
-
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
-
 
     implementation 'com.xwray:groupie:2.1.0'
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.1.0'
@@ -111,7 +106,6 @@ dependencies {
 
 
     implementation "com.google.android.material:material:1.6.1"
-
 
 
     kapt 'com.android.databinding:compiler:3.1.4'

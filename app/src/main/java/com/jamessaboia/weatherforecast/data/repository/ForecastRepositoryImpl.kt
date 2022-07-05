@@ -1,59 +1,17 @@
 package com.jamessaboia.weatherforecast.data.repository
 
-import androidx.lifecycle.LiveData
-import com.jamessaboia.weatherforecast.data.db.CurrentWeatherDao
-import com.jamessaboia.weatherforecast.data.network.WeatherNetworkDataSource
-import com.jamessaboia.weatherforecast.data.network.response.CurrentWeatherResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.threeten.bp.ZonedDateTime
+import com.jamessaboia.weatherforecast.data.db.ForecastDao
+import com.jamessaboia.weatherforecast.data.db.entity.History
 
 class ForecastRepositoryImpl(
-    private val currentWeatherDao: CurrentWeatherDao,
-    private val weatherNetworkDataSource: WeatherNetworkDataSource
+    private val forecastDao: ForecastDao
 ) : ForecastRepository {
 
-    init {
-        weatherNetworkDataSource.downloadedCurrentWeather.observeForever { newCurrentWeather->
-            persistFetchedCurrentWeather(newCurrentWeather)
-        }
-    }
-    override suspend fun getCurrentWeather(): LiveData<CurrentWeatherResponse> {
-        initWeatherData()
-        return withContext(Dispatchers.IO){
-            return@withContext currentWeatherDao.getWeather()
-        }
+    override suspend fun addForecast(history: History) {
+        return forecastDao.addForecast(history)
     }
 
-    private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherResponse){
-        GlobalScope.launch(Dispatchers.IO) {
-            currentWeatherDao.upsert(fetchedWeather.current)
-        }
-    }
-
-    private suspend fun initWeatherData() {
-//        val lastWeatherLocation = weatherLocationDao.getLocation().value
-//
-//        if (lastWeatherLocation == null ||
-//            locationProvider.hasLocationChanged(lastWeatherLocation)
-//        ) {
-//            fetchCurrentWeather()
-//            return
-//        }
-        if (isFetchCurrentNeeded(ZonedDateTime.now().minusHours(1)))
-            fetchCurrentWeather()
-    }
-
-    private suspend fun fetchCurrentWeather() {
-        weatherNetworkDataSource.fetchCurrentWeather(
-            "Manaus"
-        )
-    }
-
-    private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {
-        val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(30)
-        return lastFetchTime.isBefore(thirtyMinutesAgo)
+    override suspend fun getForecast(): List<History> {
+        return forecastDao.getForecast()
     }
 }

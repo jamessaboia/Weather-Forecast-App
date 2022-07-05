@@ -5,11 +5,16 @@
         android:icon="@drawable/ic_today"
         android:title="@string/today"/>
     <item
-        android:id="@+id/nextWeatherListFragment"
+        android:id="@+id/nextWeatherDetailsFragment"
         android:icon="@drawable/ic_week"
         android:title="@string/next_days"/>
+
+    <item
+        android:id="@+id/forecastHistoryFragment"
+        android:icon="@drawable/ic_history"
+        android:title="@string/history"/>
     <item
         android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_location"
         android:title="@string/location_settings"/>
 </menu>

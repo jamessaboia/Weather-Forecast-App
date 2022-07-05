@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/location_settings">
-        <SwitchPreference
-            android:key="USE_DEVICE_LOCATION"
-            android:title="Use device location"
-            android:summary="@string/allow_app_location"
-            android:defaultValue="true"
-            android:disableDependentsState="true"/>
+    <PreferenceCategory>
 
         <EditTextPreference
-            android:key="CUSTOM_LOCATION"
+            android:key="prefs_location"
             android:title="Location search"
-            android:summary="@string/manually_search_location"
-            android:defaultValue="Los Angeles"
-            android:dependency="USE_DEVICE_LOCATION"/>
+            android:summary="@string/search_location"
+            android:icon="@drawable/ic_search"
+            android:defaultValue="Manaus" />
     </PreferenceCategory>
 
 

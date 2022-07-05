@@ -6,7 +6,8 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.jamessaboia.weatherforecast.ui.nextweather.NextWeatherDetailsViewModel" />
+            type="com.jamessaboia.weatherforecast.ui.history.ForecastHistoryViewModel"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@string/next_3_days"
+            android:text="Forecast History"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -29,8 +30,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            tools:listitem="@layout/next_weather_item"
-            android:id="@+id/nextDays_rv"
+            tools:listitem="@layout/forecast_history_item"
+            android:id="@+id/forecastHistory_rv"
             android:backgroundTint="@color/colorSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

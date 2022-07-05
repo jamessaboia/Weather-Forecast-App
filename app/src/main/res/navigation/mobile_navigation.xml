@@ -7,21 +7,24 @@
 
     <fragment
         android:id="@+id/currentWeatherFragment"
-        android:name="com.jamessaboia.weatherforecast.ui.weather.current.CurrentWeatherFragment"
-        android:label="current_weather_fragment"
-        tools:layout="@layout/current_weather_fragment" />
-    <fragment
-        android:id="@+id/nextWeatherListFragment"
-        android:name="com.jamessaboia.weatherforecast.ui.weather.next.list.NextWeatherListFragment"
-        android:label="Next Weather"
-        tools:layout="@layout/next_weather_fragment" />
+        android:name="com.jamessaboia.weatherforecast.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_nextWeatherDetailsFragment"
+            app:destination="@id/nextWeatherDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nextWeatherDetailsFragment"
-        android:name="com.jamessaboia.weatherforecast.ui.weather.next.details.NextWeatherDetailsFragment"
-        android:label="next_weather_details_fragment"
-        tools:layout="@layout/next_weather_details_fragment" />
+        android:name="com.jamessaboia.weatherforecast.ui.nextweather.NextWeatherDetailsFragment"
+        android:label="Weather forecast"
+        tools:layout="@layout/next_weather_fragment" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.jamessaboia.weatherforecast.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="Settings" />
+    <fragment
+        android:id="@+id/forecastHistoryFragment"
+        android:name="com.jamessaboia.weatherforecast.ui.history.ForecastHistoryFragment"
+        android:label="History" />
 </navigation>

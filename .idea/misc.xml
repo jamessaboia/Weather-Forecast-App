@@ -3,11 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/drawable/ic_search.xml" value="0.2734375" />
+        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/drawable/ic_settings.xml" value="0.2734375" />
         <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/drawable/rounded_border.xml" value="0.3828125" />
-        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/current_weather_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/forecast_history_fragment.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/forecast_history_item.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/home_fragment.xml" value="0.5" />
         <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/next_weather_details_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/next_weather_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/layout/next_weather_item.xml" value="0.33645833333333336" />
         <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/menu/bottom_navigation.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/xml/network_security_config.xml" value="0.2453125" />
         <entry key="..\:/Users/James Saboia/AndroidStudioProjects/WeatherForecast/app/src/main/res/xml/preferences.xml" value="0.36666666666666664" />
