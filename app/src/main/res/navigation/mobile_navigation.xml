@@ -17,12 +17,12 @@
     <fragment
         android:id="@+id/nextWeatherDetailsFragment"
         android:name="com.jamessaboia.weatherforecast.ui.nextweather.NextWeatherDetailsFragment"
-        android:label="Weather forecast"
+        android:label="@string/app_name"
         tools:layout="@layout/next_weather_fragment" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.jamessaboia.weatherforecast.ui.settings.SettingsFragment"
-        android:label="Settings" />
+        android:label="Location Settings" />
     <fragment
         android:id="@+id/forecastHistoryFragment"
         android:name="com.jamessaboia.weatherforecast.ui.history.ForecastHistoryFragment"

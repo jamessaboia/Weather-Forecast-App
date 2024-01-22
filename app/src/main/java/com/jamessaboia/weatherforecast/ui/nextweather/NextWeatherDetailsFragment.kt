@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +41,6 @@ class NextWeatherDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecyclerView()
         setupObservers()
     }
@@ -50,30 +50,35 @@ class NextWeatherDetailsFragment : Fragment() {
         binding.nextDaysRv.setHasFixedSize(true)
     }
 
+    private fun setupObservers() {
+        viewModel.getNextWeather(requireContext(), getLocation(requireContext()))
+            .observe(requireActivity()) { resource ->
+                resource?.let {
+                    when (it) {
+                        is NetworkResponse.Success -> {
+                            showLoading(false)
+                            setupRecyclerViewAdapter(it.data)
+                        }
+
+                        is NetworkResponse.Error -> handleError(it.exception)
+                        is NetworkResponse.Loading -> showLoading(true)
+                    }
+                }
+            }
+    }
+
     private fun setupRecyclerViewAdapter(nextWeather: ForecastResponse) {
         adapter = NextWeatherAdapter(nextWeather)
         binding.nextDaysRv.adapter = adapter
     }
 
-    private fun setupObservers() {
-        viewModel.getNextWeather(requireContext(), getLocation(requireContext())).observe(requireActivity(), {
-            it?.let { resource ->
-                when (resource) {
-                    is NetworkResponse.Success -> {
-                        binding.groupLoading.visibility = View.GONE
-                        setupRecyclerViewAdapter(resource.data)
-                    }
-                    is NetworkResponse.Error -> {
-                        binding.groupLoading.visibility = View.GONE
-                        Toast.makeText(requireContext(), resource.exception, Toast.LENGTH_LONG)
-                            .show()
-                    }
-                    is NetworkResponse.Loading -> {
-                        binding.groupLoading.visibility = View.VISIBLE
-                    }
-                }
-            }
-        })
+    private fun showLoading(loading: Boolean) {
+        binding.progressBar.isVisible = loading
+        binding.nextDaysTitle.isVisible = !loading
     }
 
+    private fun handleError(exception: String) {
+        binding.progressBar.isVisible = false
+        Toast.makeText(requireContext(), exception, Toast.LENGTH_LONG).show()
+    }
 }

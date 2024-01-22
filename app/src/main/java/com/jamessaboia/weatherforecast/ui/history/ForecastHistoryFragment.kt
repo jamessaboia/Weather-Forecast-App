@@ -40,10 +40,10 @@ class ForecastHistoryFragment : Fragment() {
         viewModel.getHistory()
         setupRecyclerView()
 
-        viewModel.listHistory.observe(viewLifecycleOwner, { history ->
+        viewModel.listHistory.observe(viewLifecycleOwner) { history ->
             setupRecyclerViewAdapter(history)
-            binding.groupLoading.visibility = View.GONE
-        })
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     private fun setupRecyclerView() {
@@ -55,5 +55,4 @@ class ForecastHistoryFragment : Fragment() {
         adapter = ForecastHistoryAdapter(history)
         binding.forecastHistoryRv.adapter = adapter
     }
-
 }
